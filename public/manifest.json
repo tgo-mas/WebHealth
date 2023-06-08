@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "WebHealth",
+  "name": "WebHealth: Gerenciador de Agendamentos Médicos",
   "icons": [
     {
       "src": "favicon.ico",
