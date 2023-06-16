@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from "./config";
 
 export async function cadastroUsuario(dados) {
@@ -13,3 +13,13 @@ export async function loginUsuario(dados) {
     return res.user;
 }
 
+export async function desconectar(){
+    signOut(auth)
+        .then(() => {
+            return true;
+        })
+        .catch((err) => {
+            console.log(err);
+            return false;
+        })
+}
