@@ -2,16 +2,19 @@ import { useForm } from "react-hook-form";
 import "./Login.css"
 import { Container, Form, FloatingLabel, Button } from "react-bootstrap";
 import { loginUsuario } from "../../firebase/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 export function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
+    const navigate = useNavigate();
+
     function onSubmit(data) {
         loginUsuario(data)
             .then(user => {
                 toast.success(`Seja bem vindo(a), ${user.displayName}!`);
+                navigate("/");
             })
             .catch(err => {
                 toast.error(`Um erro aconteceu: ${err.message}`);
