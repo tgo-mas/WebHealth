@@ -2,8 +2,12 @@ h1 {
     text-align: center;
 }
 
+.form{
+    width: 100%;
+}
+
 @media (min-width: 768px) {
     .input {
-        width: 400px;
+        width: 400px !important;
     }
 }
