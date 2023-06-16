@@ -3,15 +3,18 @@ import { Container, Form, FloatingLabel, Button } from "react-bootstrap";
 import { cadastroUsuario } from "../../firebase/auth";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Cadastro() {
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const navigate = useNavigate();
 
     function onSubmit(data) {
         cadastroUsuario(data)
             .then(res => {
                 toast.success(`Usuário cadastrado: ${res.displayName}`);
+                navigate("/");
             })
             .catch(err => {
                 toast.error(`Erro no cadastro: ${err.message}`);
