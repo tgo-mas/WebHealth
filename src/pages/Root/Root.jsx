@@ -1,9 +1,9 @@
-
+import { Menu } from "../../components/Menu/Menu";
 
 export function Root(){
     return(
         <div>
-            <h1>Root Page</h1>
+            <Menu />
         </div>
     );
 }
