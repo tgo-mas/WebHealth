@@ -4,13 +4,14 @@ import { Root } from "./pages/Root/Root";
 import { Login } from "./pages/Login/Login";
 import { Cadastro } from "./pages/Cadastro/Cadastro";
 import { Toaster } from "react-hot-toast";
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthContext } from './contexts/AuthContext';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/config';
+import { Pacientes } from './pages/Pacientes/Pacientes';
+import { Home } from './pages/Home/Home';
 
 function App() {
-
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -25,7 +26,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Root />}>
-
+              <Route path="/" element={<Home />} />
+              <Route path="/pacientes" element={<Pacientes />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />
