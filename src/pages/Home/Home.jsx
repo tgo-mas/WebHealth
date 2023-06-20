@@ -10,7 +10,7 @@ export function Home(){
         if (!user) {
             navigate("/login");
         }
-    }, []);
+    }, [user, navigate]);
 
     return(
         <>

@@ -10,6 +10,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/config';
 import { Pacientes } from './pages/Pacientes/Pacientes';
 import { Home } from './pages/Home/Home';
+import { NovoPaciente } from './pages/NovoPaciente/NovoPaciente';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -28,6 +29,7 @@ function App() {
             <Route path="/" element={<Root />}>
               <Route path="/" element={<Home />} />
               <Route path="/pacientes" element={<Pacientes />} />
+              <Route path="/pacientes/novo" element={<NovoPaciente />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />
