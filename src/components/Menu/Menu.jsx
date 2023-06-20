@@ -1,21 +1,13 @@
 import { Container, NavDropdown, Navbar, Nav } from "react-bootstrap";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { desconectar } from "../../firebase/auth";
 import { toast } from "react-hot-toast";
-import { Button } from "bootstrap";
 
 export function Menu() {
     const user = useContext(AuthContext);
-
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!user) {
-            navigate("/login");
-        }
-    }, []);
 
     function handleLogout(){
         if(desconectar()){
@@ -30,10 +22,11 @@ export function Menu() {
         <>
             <Navbar bg="dark" variant="dark" expand="md">
                 <Container>
-                    <Navbar.Brand>WebHealth</Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/">WebHealth</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbar-collapse" />
                     <Navbar.Collapse id="navbar-collapse" className="d-md-flex justify-content-end">
                         <Nav>
+                            <Nav.Link href="/pacientes">Pacientes</Nav.Link>
                             <NavDropdown
                                 title={user && user.displayName}
                                 menuVariant="light"
