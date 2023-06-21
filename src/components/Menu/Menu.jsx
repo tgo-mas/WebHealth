@@ -28,6 +28,7 @@ export function Menu() {
                         <Nav>
                             <Nav.Link href="/pacientes">Pacientes</Nav.Link>
                             <Nav.Link href="/medicos">Médicos</Nav.Link>
+                            <Nav.Link href="/agendamentos">Agendamentos</Nav.Link>
                             <NavDropdown
                                 title={user && user.displayName}
                                 menuVariant="light"
