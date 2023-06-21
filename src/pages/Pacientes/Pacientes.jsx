@@ -86,5 +86,5 @@ export function Pacientes() {
                 </Table>
             </Container>
         </>
-    )
+    );
 }

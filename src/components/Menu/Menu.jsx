@@ -27,6 +27,7 @@ export function Menu() {
                     <Navbar.Collapse id="navbar-collapse" className="d-md-flex justify-content-end">
                         <Nav>
                             <Nav.Link href="/pacientes">Pacientes</Nav.Link>
+                            <Nav.Link href="/medicos">Médicos</Nav.Link>
                             <NavDropdown
                                 title={user && user.displayName}
                                 menuVariant="light"
