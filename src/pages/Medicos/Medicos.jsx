@@ -2,10 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { Container, Button, Table } from "react-bootstrap";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Medicos(){
-
+    const navigate = useNavigate();
     const [ medicos, setMedicos ] = useState([]);
     
     useEffect(() => {
@@ -20,6 +20,21 @@ export function Medicos(){
             .catch(err => {
                 toast.error(`Um erro aconteceu: ${err.message}`);
             })
+    }
+
+    function onDeleteMedico(medico){
+        const del = window.confirm(`Tem certeza que deseja excluir o médico ${medico.nome}?`);
+
+        if(del){
+            axios.delete(`http://localhost:3001/medicos/${medico.id}`)
+                .then(res => {
+                    toast.success(`Médico excluído com sucesso!`);
+                    initTable();
+                })
+                .catch(err => {
+                    toast.error(`Um erro aconteceu: ${err.message}`);
+                });
+        }
     }
 
     return (
@@ -52,12 +67,12 @@ export function Medicos(){
                                         <td>{medico.telefone}</td>
                                         <td>{medico.especialidade}</td>
                                         <td>
-                                            {/* <Button onClick={() => navigate(`/medicos/editar/${paciente.id}`)}>
+                                            <Button onClick={() => navigate(`/medicos/editar/${medico.id}`)}>
                                                 <i className="bi bi-pencil-fill"></i>
                                             </Button>
-                                            <Button onClick={() => onDeletePaciente(paciente)}>
+                                            <Button onClick={() => onDeleteMedico(medico)}>
                                                 <i className="bi bi-trash-fill"></i>
-                                            </Button> */}
+                                            </Button>
                                         </td>
                                     </tr>
                                 )
