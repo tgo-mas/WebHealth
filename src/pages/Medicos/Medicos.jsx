@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { Container, Button, Table } from "react-bootstrap";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 export function Medicos(){
 
@@ -25,6 +26,7 @@ export function Medicos(){
         <>
             <Container className="mt-3 d-flex justify-content-between align-items-center">
                 <h2>Médicos</h2>
+                <Button as={Link} to="/medicos/novo" variant="primary">Adicionar</Button>
             </Container>
             <hr />
             <Container>

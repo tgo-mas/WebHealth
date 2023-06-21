@@ -13,6 +13,7 @@ import { Home } from './pages/Home/Home';
 import { NovoPaciente } from './pages/NovoPaciente/NovoPaciente';
 import { EditarPaciente } from './pages/EditarPaciente/EditarPaciente';
 import { Medicos } from './pages/Medicos/Medicos';
+import { NovoMedico } from './pages/NovoMedico/NovoMedico';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -34,6 +35,7 @@ function App() {
               <Route path="/pacientes/novo" element={<NovoPaciente />} />
               <Route path="/pacientes/editar/:id" element={<EditarPaciente />} />
               <Route path="/medicos" element={<Medicos />} />
+              <Route path="/medicos/novo" element={<NovoMedico />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />
