@@ -11,6 +11,7 @@ import { auth } from './firebase/config';
 import { Pacientes } from './pages/Pacientes/Pacientes';
 import { Home } from './pages/Home/Home';
 import { NovoPaciente } from './pages/NovoPaciente/NovoPaciente';
+import { EditarPaciente } from './pages/EditarPaciente/EditarPaciente';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -30,6 +31,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/pacientes" element={<Pacientes />} />
               <Route path="/pacientes/novo" element={<NovoPaciente />} />
+              <Route path="/pacientes/editar/:id" element={<EditarPaciente />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />

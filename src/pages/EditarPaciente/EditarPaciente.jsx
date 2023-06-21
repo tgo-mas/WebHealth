@@ -1,18 +1,30 @@
-
+import { useParams } from "react-router";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-export function NovoPaciente() {
+export function EditarPaciente() {
+    const { id } = useParams();
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+    useEffect(() => {
+        axios.get(`http://localhost:3001/pacientes/${id}`)
+            .then(res => {
+                reset(res.data);
+            })
+            .catch(err => {
+                toast.error(`Erro ao buscar paciente: ${err.message}`);
+            });
+    }, []);
 
     function onSubmit(data) {
-        axios.post("http://localhost:3001/pacientes", data)
+        axios.put(`http://localhost:3001/pacientes/${id}`, data)
             .then(res => {
-                toast.success("Paciente cadastrado com sucesso!");
+                toast.success("Paciente editado com sucesso!");
                 navigate("/pacientes");
             })
             .catch(err => {
@@ -22,7 +34,7 @@ export function NovoPaciente() {
 
     return (
         <>
-            <h1 className="mt-3">Cadastrar Paciente</h1>
+            <h1 className="mt-3">Editar Paciente</h1>
             <hr />
             <Form className="m-4 p-4" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Floating
