@@ -1,40 +1,39 @@
-import { useParams } from "react-router";
 import axios from "axios";
-import { Form, Button } from "react-bootstrap";
+import { useEffect } from "react";
+import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router";
 
-export function EditarPaciente() {
+export function EditarMedico(){
     const { id } = useParams();
-    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/pacientes/${id}`)
+        axios.get(`http://localhost:3001/medicos/${id}`)
             .then(res => {
                 reset(res.data);
             })
             .catch(err => {
-                toast.error(`Erro ao buscar paciente: ${err.message}`);
-            });
+                toast.error(`Um erro aconteceu: ${err.message}`);
+            })
     }, [id, reset]);
-
-    function onSubmit(data) {
-        axios.put(`http://localhost:3001/pacientes/${id}`, data)
+    
+    function onSubmit(data){
+        axios.put(`http://localhost:3001/medicos/${id}`, data)
             .then(res => {
-                toast.success("Paciente editado com sucesso!");
-                navigate("/pacientes");
+                toast.success("Médico editado com sucesso!");
+                navigate("/medicos");
             })
             .catch(err => {
                 toast.error(`Um erro aconteceu: ${err.message}`);
-            })
+            });
     }
 
-    return (
+    return(
         <>
-            <h1 className="mt-3">Editar Paciente</h1>
+            <h1 className="mt-3">Editar Médico</h1>
             <hr />
             <Form className="m-4 p-4" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Floating
@@ -80,53 +79,14 @@ export function EditarPaciente() {
                     className="m-3"
                 >
                     <Form.Control
-                        placeholder="Endereco"
+                        placeholder="Especialidade"
                         type="text"
-                        id="endereco"
-                        className={errors.endereco && "is-invalid"}
-                        {...register("endereco", { required: true })}
+                        id="especialidade"
+                        className={errors.especialidade && "is-invalid"}
+                        {...register("especialidade", { maxLength: 12 })}
                     />
-                    <label htmlFor="endereco">Endereço</label>
-                    {errors.endereco && <Form.Text className="invalid-feedback">O campo endereço é obrigatório!</Form.Text>}
-                </Form.Floating>
-                <Form.Floating
-                    className="m-3"
-                >
-                    <Form.Control
-                        placeholder="CPF"
-                        type="tel"
-                        id="cpf"
-                        className={errors.cpf && "is-invalid"}
-                        {...register("cpf", { maxLength: 12 })}
-                    />
-                    <label htmlFor="cpf">CPF</label>
-                    {errors.cpf && <Form.Text className="invalid-feedback">{errors.cpf.message}</Form.Text>}
-                </Form.Floating>
-                <Form.Floating
-                    className="m-3"
-                >
-                    <Form.Control
-                        placeholder="RG"
-                        type="tel"
-                        id="RG"
-                        className={errors.rg && "is-invalid"}
-                        {...register("rg", { maxLength: 10 })}
-                    />
-                    <label htmlFor="rg">RG</label>
-                    {errors.rg && <Form.Text className="invalid-feedback">{errors.rg.message}</Form.Text>}
-                </Form.Floating>
-                <Form.Floating
-                    className="m-3"
-                >
-                    <Form.Control
-                        placeholder="Data de Nascimento"
-                        type="date"
-                        id="dataNasc"
-                        className={errors.dataNasc && "is-invalid"}
-                        {...register("dataNasc", { required: true })}
-                    />
-                    <label htmlFor="dataNasc">Data de Nascimento</label>
-                    {errors.dataNasc && <Form.Text className="invalid-feedback">O campo data de nascimento é obrigatório!</Form.Text>}
+                    <label htmlFor="especialidade">Especialidade</label>
+                    {errors.especialidade && <Form.Text className="invalid-feedback">{errors.especialidade.message}</Form.Text>}
                 </Form.Floating>
                 <div className="d-flex justify-content-end gap-3">
                     <Button type="reset" variant="danger">Limpar</Button>
@@ -135,4 +95,6 @@ export function EditarPaciente() {
             </Form>
         </>
     );
+
+
 }

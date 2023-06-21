@@ -14,6 +14,7 @@ import { NovoPaciente } from './pages/NovoPaciente/NovoPaciente';
 import { EditarPaciente } from './pages/EditarPaciente/EditarPaciente';
 import { Medicos } from './pages/Medicos/Medicos';
 import { NovoMedico } from './pages/NovoMedico/NovoMedico';
+import { EditarMedico } from './pages/EditarMedico/EditarMedico';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -36,6 +37,7 @@ function App() {
               <Route path="/pacientes/editar/:id" element={<EditarPaciente />} />
               <Route path="/medicos" element={<Medicos />} />
               <Route path="/medicos/novo" element={<NovoMedico />} />
+              <Route path="/medicos/editar/:id" element={<EditarMedico />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />
