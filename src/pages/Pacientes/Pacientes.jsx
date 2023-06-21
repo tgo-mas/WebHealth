@@ -2,13 +2,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Container, Button, Table } from "react-bootstrap";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Pacientes() {
-
+    const navigate = useNavigate();
     const [pacientes, setPacientes] = useState([]);
 
     useEffect(() => {
+        initTable();
+    }, []);
+
+    function initTable() {
         axios.get("http://localhost:3001/pacientes")
             .then(res => {
                 setPacientes(res.data);
@@ -16,7 +20,21 @@ export function Pacientes() {
             .catch(err => {
                 toast.error(`Um erro aconteceu: ${err.message}`);
             });
-    }, []);
+    }
+
+    function onDeletePaciente(paciente) {
+        const del = window.confirm(`Tem certeza que deseja excluir o paciente ${paciente.nome}?`);
+        if (del) {
+            axios.delete(`http://localhost:3001/pacientes/${paciente.id}`)
+                .then(res => {
+                    toast.success(`Paciente ${paciente.nome} excluído com sucesso!`);
+                    navigate("/pacientes");
+                })
+                .catch(err => {
+                    toast.error(`Um erro aconteceu: ${err.message}`);
+                });
+        }
+    }
 
     return (
         <>
@@ -36,6 +54,7 @@ export function Pacientes() {
                             <th>Data de Nascimento</th>
                             <th>Endereço</th>
                             <th>Telefone</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,6 +71,14 @@ export function Pacientes() {
                                         <td>{paciente.dataNasc}</td>
                                         <td>{paciente.endereco}</td>
                                         <td>{paciente.telefone}</td>
+                                        <td>
+                                            <Button onClick={() => navigate(`/pacientes/editar/${paciente.id}`)}>
+                                                <i className="bi bi-pencil-fill"></i>
+                                            </Button>
+                                            <Button onClick={() => onDeletePaciente(paciente)}>
+                                                <i className="bi bi-trash-fill"></i>
+                                            </Button>
+                                        </td>
                                     </tr>
                                 )
                             })}
