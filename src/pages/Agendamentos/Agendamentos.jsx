@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Container, Table } from "react-bootstrap";
+import { Button, Container, Table } from "react-bootstrap";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
+export function Agendamentos() {
 
-export function Agendamentos(){
-
-    const [ agendamentos, setAgendamentos ] = useState([]);
+    const [agendamentos, setAgendamentos] = useState([]);
 
     useEffect(() => {
         axios.get("http://localhost:3001/agendamentos")
@@ -18,11 +18,11 @@ export function Agendamentos(){
             });
     }, []);
 
-    return(
+    return (
         <>
             <Container className="mt-3 d-flex justify-content-between align-items-center">
                 <h2>Agendamentos</h2>
-                {/* <Button as={Link} to="/agendamentos/novo" variant="primary">Adicionar</Button> */}
+                <Button as={Link} to="/agendamentos/novo" variant="primary">Adicionar</Button>
             </Container>
             <hr />
             <Container>
