@@ -9,6 +9,10 @@ export function Agendamentos() {
     const [agendamentos, setAgendamentos] = useState([]);
 
     useEffect(() => {
+        initTable();
+    }, []);
+
+    function initTable(){
         axios.get("http://localhost:3001/agendamentos")
             .then(res => {
                 setAgendamentos(res.data);
@@ -16,7 +20,22 @@ export function Agendamentos() {
             .catch(err => {
                 toast.error(`Um erro aconteceu: ${err.message}`);
             });
-    }, []);
+    }
+
+    function onDeleteAgendamento(agend){
+        const del = window.confirm(`Tem certeza que deseja excluir este agendamento?`);
+
+        if(del){
+            axios.delete(`http://localhost:3001/agendamentos/${agend.id}`)
+                .then(res => {
+                    toast.success("Agendamento excluído com sucesso!");
+                    initTable();
+                })
+                .catch(err => {
+                    toast.error(`Erro ao excluir agendamento: ${err.message}`);
+                });
+        }
+    }
 
     return (
         <>
@@ -55,10 +74,10 @@ export function Agendamentos() {
                                         <td>
                                             {/* <Button onClick={() => navigate(`/agendamentos/editar/${agendamento.id}`)}>
                                                 <i className="bi bi-pencil-fill"></i>
-                                            </Button>
+                                            </Button> */}
                                             <Button onClick={() => onDeleteAgendamento(agendamento)}>
                                                 <i className="bi bi-trash-fill"></i>
-                                            </Button> */}
+                                            </Button>
                                         </td>
                                     </tr>
                                 )
