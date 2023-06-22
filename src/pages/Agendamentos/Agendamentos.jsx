@@ -2,10 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Container, Table } from "react-bootstrap";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Agendamentos() {
-
+    const navigate = useNavigate();
     const [agendamentos, setAgendamentos] = useState([]);
 
     useEffect(() => {
@@ -72,9 +72,9 @@ export function Agendamentos() {
                                         <td>{fimFormatado.toLocaleString('pt-br')}</td>
                                         <td>{agendamento.observacoes}</td>
                                         <td>
-                                            {/* <Button onClick={() => navigate(`/agendamentos/editar/${agendamento.id}`)}>
+                                            <Button onClick={() => navigate(`/agendamentos/editar/${agendamento.id}`)}>
                                                 <i className="bi bi-pencil-fill"></i>
-                                            </Button> */}
+                                            </Button>
                                             <Button onClick={() => onDeleteAgendamento(agendamento)}>
                                                 <i className="bi bi-trash-fill"></i>
                                             </Button>
