@@ -13,6 +13,25 @@ export function Agendamentos() {
         initTable();
     }, []);
 
+    function getBadge(status){
+        switch(status){
+            case "Pendente":
+                return(
+                    <Badge bg="warning">{status}</Badge>
+                );
+            case "Realizada":
+                return(
+                    <Badge bg="success">{status}</Badge>
+                );
+            case "Cancelada":
+                return(
+                    <Badge bg="danger">{status}</Badge>
+                );
+            default:
+                return;
+        }
+    }
+
     function initTable(url){
         if(!url){
             url = "http://localhost:3001/agendamentos"; 
@@ -78,12 +97,12 @@ export function Agendamentos() {
                                         <td>{inicFormatado.toLocaleString('pt-br')}</td>
                                         <td>{fimFormatado.toLocaleString('pt-br')}</td>
                                         <td>{agendamento.observacoes}</td>
-                                        <td><Badge>{agendamento.status}</Badge></td>
+                                        <td>{getBadge(agendamento.status)}</td>
                                         <td>
-                                            <Button onClick={() => navigate(`/agendamentos/editar/${agendamento.id}`)}>
+                                            <Button variant="warning" className="m-2" onClick={() => navigate(`/agendamentos/editar/${agendamento.id}`)}>
                                                 <i className="bi bi-pencil-fill"></i>
                                             </Button>
-                                            <Button onClick={() => onDeleteAgendamento(agendamento)}>
+                                            <Button variant="danger" className="m-2" onClick={() => onDeleteAgendamento(agendamento)}>
                                                 <i className="bi bi-trash-fill"></i>
                                             </Button>
                                         </td>

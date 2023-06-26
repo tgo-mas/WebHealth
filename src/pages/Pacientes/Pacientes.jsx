@@ -1,16 +1,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Container, Button, Table } from "react-bootstrap";
+import { Container, Button, Table, Modal } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
 export function Pacientes() {
     const navigate = useNavigate();
     const [pacientes, setPacientes] = useState([]);
+    const [paciente, setPaciente] = useState({});
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         initTable();
     }, []);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    function openModal(paciente){
+        setPaciente(paciente);
+        handleShow();
+    }
 
     function initTable() {
         axios.get("http://localhost:3001/pacientes")
@@ -49,11 +59,7 @@ export function Pacientes() {
                         <tr>
                             <th>Nome</th>
                             <th>E-mail</th>
-                            <th>CPF</th>
-                            <th>RG</th>
                             <th>Data de Nascimento</th>
-                            <th>Endereço</th>
-                            <th>Telefone</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -66,16 +72,15 @@ export function Pacientes() {
                                     <tr key={index}>
                                         <td>{paciente.nome}</td>
                                         <td>{paciente.email}</td>
-                                        <td>{paciente.cpf}</td>
-                                        <td>{paciente.rg}</td>
                                         <td>{paciente.dataNasc}</td>
-                                        <td>{paciente.endereco}</td>
-                                        <td>{paciente.telefone}</td>
                                         <td>
-                                            <Button onClick={() => navigate(`/pacientes/editar/${paciente.id}`)}>
+                                            <Button variant="success" className="m-2" onClick={() => openModal(paciente)}>
+                                                <i className="bi bi-journal-text"></i>
+                                            </Button>
+                                            <Button variant="warning" className="m-2" onClick={() => navigate(`/pacientes/editar/${paciente.id}`)}>
                                                 <i className="bi bi-pencil-fill"></i>
                                             </Button>
-                                            <Button onClick={() => onDeletePaciente(paciente)}>
+                                            <Button variant="danger" className="m-2" onClick={() => onDeletePaciente(paciente)}>
                                                 <i className="bi bi-trash-fill"></i>
                                             </Button>
                                         </td>
@@ -85,6 +90,20 @@ export function Pacientes() {
                     </tbody>
                 </Table>
             </Container>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Mais detalhes</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Nome: {paciente.nome}</p>
+                    <p>E-mail: {paciente.email}</p>
+                    <p>Telefone: {paciente.telefone}</p>
+                    <p>Endereço: {paciente.endereco}</p>
+                    <p>CPF: {paciente.cpf}</p>
+                    <p>RG: {paciente.rg}</p>
+                    <p>Data de Nascimento: {paciente.dataNasc}</p>
+                </Modal.Body>
+            </Modal>
         </>
     );
 }
