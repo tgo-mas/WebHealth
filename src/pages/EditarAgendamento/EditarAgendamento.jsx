@@ -47,7 +47,7 @@ export function EditarAgendamento() {
 
     return (
         <>
-            <h1 className="mt-3">Novo Agendamento</h1>
+            <h1 className="mt-3">Editar Agendamento</h1>
             <hr />
             <Form className="m-4 p-4" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Select
@@ -118,6 +118,14 @@ export function EditarAgendamento() {
                     <label htmlFor="observacoes">Observações</label>
                     {errors.observacoes && <Form.Text className="invalid-feedback">{errors.observacoes.message}</Form.Text>}
                 </Form.Floating>
+                <Form.Select
+                    className="m-3"
+                    {...register("status")}
+                >
+                    <option value="Pendente">Pendente</option>
+                    <option value="Realizada">Realizada</option>
+                    <option value="Cancelada">Cancelada</option>
+                </Form.Select>
                 <div className="d-flex justify-content-end gap-3">
                     <Button type="reset" variant="danger">Limpar</Button>
                     <Button className="me-3" type="submit" variant="primary">Enviar</Button>
