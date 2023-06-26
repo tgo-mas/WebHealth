@@ -35,7 +35,8 @@ export function NovoAgendamento() {
                 navigate("/agendamentos");
             })
             .catch(err => {
-                toast.error(`Um erro aconteceu: ${err.message}`);
+                toast.error(`Um erro aconteceu: ${err.response.data.message}`);
+                console.log(err);
             });
     }
 

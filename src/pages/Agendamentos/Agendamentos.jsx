@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, Container, Table } from "react-bootstrap";
+import { Badge, Button, Container, Table } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { Filtros } from "../../components/Filtros/Filtros";
 
 export function Agendamentos() {
     const navigate = useNavigate();
@@ -12,8 +13,12 @@ export function Agendamentos() {
         initTable();
     }, []);
 
-    function initTable(){
-        axios.get("http://localhost:3001/agendamentos")
+    function initTable(url){
+        if(!url){
+            url = "http://localhost:3001/agendamentos"; 
+        }
+        console.log(url);
+        axios.get(url)
             .then(res => {
                 setAgendamentos(res.data);
             })
@@ -44,6 +49,7 @@ export function Agendamentos() {
                 <Button as={Link} to="/agendamentos/novo" variant="primary">Adicionar</Button>
             </Container>
             <hr />
+            <Filtros initTable={initTable} />
             <Container>
                 <Table>
                     <thead>
@@ -53,6 +59,7 @@ export function Agendamentos() {
                             <th>Início</th>
                             <th>Término</th>
                             <th>Observações</th>
+                            <th>Status</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -71,6 +78,7 @@ export function Agendamentos() {
                                         <td>{inicFormatado.toLocaleString('pt-br')}</td>
                                         <td>{fimFormatado.toLocaleString('pt-br')}</td>
                                         <td>{agendamento.observacoes}</td>
+                                        <td><Badge>{agendamento.status}</Badge></td>
                                         <td>
                                             <Button onClick={() => navigate(`/agendamentos/editar/${agendamento.id}`)}>
                                                 <i className="bi bi-pencil-fill"></i>
